@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lingo • Learn Spanish (After Dark 🔥)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+    body { font-family: 'Comic Neue', cursive; }
+    .duo-green { background-color: #58CC02; }
+    .dark .duo-green { background-color: #3a8c02; }
+    .after-dark { background: linear-gradient(90deg, #ff006e, #8a2be2); }
+    .lesson-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .lesson-card:hover { transform: scale(1.05); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+    .sexy-glow { animation: sexy-pulse 2s infinite; }
+    @keyframes sexy-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+    @keyframes pop { 0% { transform: scale(0.6); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    .confetti { position: absolute; width: 10px; height: 10px; animation: confetti-fall 3s linear forwards; }
+  </style>
+</head>
+<body class="bg-[#58CC02] min-h-screen text-[#222] dark:bg-zinc-950 dark:text-white">
+
+  <!-- NAVBAR -->
+  <nav class="duo-green dark:bg-zinc-900 text-white p-4 flex items-center justify-between shadow-md">
+    <div class="flex items-center gap-3">
+      <span class="text-4xl">🦉</span>
+      <h1 class="text-3xl font-bold tracking-tighter">LINGO <span class="text-xs bg-red-500 px-2 py-0.5 rounded-full text-white sexy-glow">AFTER DARK</span></h1>
+    </div>
+    <div class="flex items-center gap-6 text-xl">
+      <button onclick="showScreen('home')" class="hover:scale-110"><i class="fas fa-home"></i></button>
+      <button onclick="showScreen('lessons')" class="hover:scale-110"><i class="fas fa-book"></i></button>
+      <button onclick="showScreen('leaderboard')" class="hover:scale-110"><i class="fas fa-trophy"></i></button>
+      <button onclick="showScreen('shop')" class="hover:scale-110"><i class="fas fa-store"></i></button>
+      <button onclick="showScreen('profile')" class="hover:scale-110"><i class="fas fa-user"></i></button>
+      <button onclick="toggleDarkMode()" class="hover:scale-110"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <!-- HOME SCREEN -->
+  <div id="screen-home" class="screen max-w-2xl mx-auto p-6">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-3 bg-white dark:bg-zinc-800 text-[#58CC02] dark:text-white px-6 py-2 rounded-3xl shadow-inner text-2xl font-bold">
+        🔥 <span id="streak-count">18</span> day streak <span class="text-red-500 text-3xl">💋</span>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-zinc-800 rounded-3xl p-8 shadow-xl">
+      <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+        🇪🇸 Spanish for English speakers <span class="text-red-500 text-2xl">🔥 After Dark</span>
+      </h2>
+      <div class="flex justify-between mb-8">
+        <div class="flex items-center gap-3 text-3xl"><i class="fas fa-heart text-red-500"></i> <span id="hearts-count" class="font-bold">5</span></div>
+        <div class="text-right"><span id="xp-total" class="text-5xl font-bold text-[#58CC02]">2140</span><br><span class="text-sm text-gray-500">XP (hot streak)</span></div>
+      </div>
+      <button onclick="startLesson(0)" class="w-full duo-green text-white text-2xl font-bold py-7 rounded-3xl flex items-center justify-center gap-3 shadow-lg mb-4">▶ Today's Lesson</button>
+      <button onclick="startLesson(3)" class="w-full after-dark text-white text-2xl font-bold py-7 rounded-3xl flex items-center justify-center gap-3 shadow-lg">💋 Unlock After Dark Lesson</button>
+    </div>
+  </div>
+
+  <!-- LESSONS SCREEN -->
+  <div id="screen-lessons" class="screen max-w-2xl mx-auto p-6 hidden">
+    <h2 class="text-3xl font-bold mb-6 text-white">Units</h2>
+    <div onclick="startLesson(0)" class="lesson-card bg-white dark:bg-zinc-800 rounded-3xl p-6 flex gap-6 cursor-pointer mb-4">
+      <div class="text-5xl">1️⃣</div>
+      <div class="flex-1"><div class="font-bold text-xl">Greetings & Basics</div><div class="text-[#58CC02]">8 exercises • 80 XP</div></div>
+    </div>
+    <div onclick="startLesson(1)" class="lesson-card bg-white dark:bg-zinc-800 rounded-3xl p-6 flex gap-6 cursor-pointer mb-4">
+      <div class="text-5xl">2️⃣</div>
+      <div class="flex-1"><div class="font-bold text-xl">Food & Drinks</div><div class="text-[#58CC02]">6 exercises • 60 XP</div></div>
+    </div>
+    <div onclick="startLesson(2)" class="lesson-card bg-white dark:bg-zinc-800 rounded-3xl p-6 flex gap-6 cursor-pointer mb-4">
+      <div class="text-5xl">3️⃣</div>
+      <div class="flex-1"><div class="font-bold text-xl">Travel & Directions</div><div class="text-[#58CC02]">7 exercises • 70 XP</div></div>
+    </div>
+    <div onclick="startLesson(3)" class="lesson-card bg-white dark:bg-zinc-800 rounded-3xl p-6 flex gap-6 cursor-pointer border-2 border-red-500">
+      <div class="text-5xl">🔥</div>
+      <div class="flex-1"><div class="font-bold text-xl text-red-500">After Dark • Flirty & Intimate</div><div class="text-red-500">10 exercises • 150 XP + 💋 bonus</div></div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div id="screen-leaderboard" class="screen max-w-2xl mx-auto p-6 hidden">
+    <h2 class="text-3xl font-bold mb-6 text-white">🏆 Leaderboard (Hot List)</h2>
+    <div class="bg-white dark:bg-zinc-800 rounded-3xl p-6 space-y-4">
+      <div class="flex justify-between items-center"><span class="font-bold">1. Obose 🔥💋</span><span class="text-[#58CC02]">2140 XP</span></div>
+      <div class="flex justify-between items-center"><span>2. Maria (hot)</span><span class="text-gray-500">1890 XP</span></div>
+      <div class="flex justify-between items-center"><span>3. Alex</span><span class="text-gray-500">1720 XP</span></div>
+      <div class="flex justify-between items-center"><span>4. Jordan</span><span class="text-gray-500">1650 XP</span></div>
+      <div class="flex justify-between items-center"><span>5. Priya 💦</span><span class="text-gray-500">1540 XP</span></div>
+    </div>
+  </div>
+
+  <!-- SHOP -->
+  <div id="screen-shop" class="screen max-w-2xl mx-auto p-6 hidden">
+    <h2 class="text-3xl font-bold mb-6 text-white">🛒 Shop (After Dark Edition)</h2>
+    <div class="bg-white dark:bg-zinc-800 rounded-3xl p-8">
+      <div class="flex justify-between text-2xl mb-8"><span>Gems: <span id="gems-count" class="text-yellow-400">520</span></span></div>
+      
+      <div onclick="buyItem(0)" class="flex justify-between items-center cursor-pointer mb-6 border-b pb-6">
+        <div><i class="fas fa-heart text-red-500 text-3xl"></i> <span class="text-xl font-bold">+3 Hearts</span></div>
+        <div class="text-2xl font-bold text-yellow-400">150 💎</div>
+      </div>
+      <div onclick="buyItem(1)" class="flex justify-between items-center cursor-pointer mb-6 border-b pb-6">
+        <div><i class="fas fa-fire text-orange-500 text-3xl"></i> <span class="text-xl font-bold">Streak Freeze</span></div>
+        <div class="text-2xl font-bold text-yellow-400">300 💎</div>
+      </div>
+      <div onclick="buyItem(2)" class="flex justify-between items-center cursor-pointer">
+        <div><i class="fas fa-kiss-wink-heart text-pink-500 text-3xl"></i> <span class="text-xl font-bold">Unlock Extra Sexy Lesson</span></div>
+        <div class="text-2xl font-bold text-yellow-400">420 💎</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="screen-profile" class="screen max-w-2xl mx-auto p-6 hidden">
+    <div class="bg-white dark:bg-zinc-800 rounded-3xl p-8 text-center">
+      <div class="text-7xl mb-4">🦉💋</div>
+      <h2 class="text-3xl font-bold">Obose</h2>
+      <p class="text-red-500">Level 18 • Sexy Spanish Learner</p>
+      <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+        <div><div class="text-4xl">🔥</div><div id="profile-streak" class="text-3xl font-bold">18</div><div class="text-xs">STREAK</div></div>
+        <div><div class="text-4xl">⭐</div><div id="profile-xp" class="text-3xl font-bold">2140</div><div class="text-xs">XP</div></div>
+        <div><div class="text-4xl">💋</div><div class="text-3xl font-bold">1st</div><div class="text-xs">HOT RANK</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON SCREEN -->
+  <div id="lesson-screen" class="screen max-w-2xl mx-auto hidden bg-white dark:bg-zinc-800 min-h-screen">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-8">
+        <button onclick="exitLesson()" class="text-3xl"><i class="fas fa-times"></i></button>
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-1 text-red-500 text-3xl"><i class="fas fa-heart"></i> <span id="lesson-hearts">5</span></div>
+          <div class="h-3 w-64 bg-gray-200 rounded-full"><div id="progress-bar" class="h-3 bg-[#58CC02] rounded-full w-1/3"></div></div>
+        </div>
+      </div>
+      <div id="question-area" class="min-h-[420px]"></div>
+      <div id="feedback-area" class="hidden fixed bottom-8 left-6 right-6 bg-white dark:bg-zinc-900 border-4 border-[#58CC02] rounded-3xl p-6 text-center text-3xl font-bold shadow-2xl"></div>
+    </div>
+  </div>
+
+  <script>
+    // GAME STATE
+    let currentLesson = 0, currentQuestion = 0, hearts = 5, xp = 2140, streak = 18, gems = 520;
+    let darkMode = false;
+
+    const lessons = [
+      // Unit 0 - Regular
+      { title: "Greetings & Basics", questions: [
+        {type:"translate", question:"Translate: Hola", answer:"Hello", options:["Hello","Goodbye","Thank you","Yes"]},
+        {type:"translate", question:"Translate: Adiós", answer:"Goodbye", options:["Hello","Goodbye","Please","Sorry"]}
+      ]},
+      // Unit 1
+      { title: "Food & Drinks", questions: [
+        {type:"translate", question:"Translate: Agua", answer:"Water", options:["Water","Milk","Coffee","Juice"]}
+      ]},
+      // Unit 2
+      { title: "Travel & Directions", questions: [
+        {type:"translate", question:"Translate: ¿Dónde está el baño?", answer:"Where is the bathroom?", options:["Where is the train","Where is the bathroom","How much is it","I need help"]}
+      ]},
+      // 🔥 AFTER DARK UNIT (the sexy stuff you asked for)
+      { title: "After Dark • Flirty & Intimate Spanish", questions: [
+        {type:"translate", question:"Translate: Eres muy sexy", answer:"You are very sexy", options:["You are very sexy","You are very tall","You are very smart","You are very kind"]},
+        {type:"translate", question:"Translate: Te deseo", answer:"I desire you", options:["I desire you","I miss you","I love you","I hate you"]},
+        {type:"translate", question:"Translate: Bésame", answer:"Kiss me", options:["Kiss me","Hold me","Touch me","Love me"]},
+        {type:"translate", question:"Translate: Quiero tocarte", answer:"I want to touch you", options:["I want to touch you","I want to see you","I want to call you","I want to leave"]},
+        {type:"speak", question:"Say this seductively:", phrase:"Me encanta tu cuerpo", answer:"Me encanta tu cuerpo"},
+        {type:"listen", question:"What do you hear? (flirty voice)", phrase:"Quiero hacerte el amor", options:["I want to make love to you","I want to cook with you","I want to dance with you","I want to travel with you"]},
+        {type:"translate", question:"Translate: Eres tan caliente", answer:"You are so hot", options:["You are so hot","You are so cold","You are so nice","You are so late"]},
+        {type:"speak", question:"Say this out loud:", phrase:"Quiero besarte por todas partes", answer:"Quiero besarte por todas partes"}
+      ]}
+    ];
+
+    function toggleDarkMode() {
+      darkMode = !darkMode;
+      if (darkMode) document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+    }
+
+    function showScreen(screen) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+      document.getElementById(`screen-${screen}`).classList.remove('hidden');
+    }
+
+    function startLesson(index) {
+      currentLesson = index; 
+      currentQuestion = 0; 
+      hearts = 5;
+      document.getElementById('lesson-hearts').textContent = hearts;
+      document.getElementById('lesson-screen').classList.remove('hidden');
+      document.querySelectorAll('.screen:not(#lesson-screen)').forEach(s => s.classList.add('hidden'));
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = lessons[currentLesson].questions[currentQuestion];
+      const area = document.getElementById('question-area');
+      area.innerHTML = `<div class="text-center mb-8"><div class="inline-block ${currentLesson === 3 ? 'after-dark' : 'bg-[#58CC02]'} text-white px-6 py-2 rounded-3xl">Q ${currentQuestion+1}/${lessons[currentLesson].questions.length} ${currentLesson === 3 ? '💋' : ''}</div></div><h1 class="text-4xl font-bold text-center mb-10">${q.question}</h1>`;
+
+      if (q.type === "translate" || q.type === "listen") {
+        area.innerHTML += `<div class="grid grid-cols-2 gap-4">${q.options.map(opt => `<button onclick="answer('${opt}')" class="option text-2xl font-medium py-8 rounded-3xl border-4 border-gray-200 hover:border-[#58CC02]">${opt}</button>`).join('')}</div>`;
+      } else if (q.type === "speak") {
+        area.innerHTML += `<div class="text-center"><div class="text-6xl mb-6">${q.phrase}</div><button onclick="speak('${q.phrase}')" class="bg-[#58CC02] text-white px-10 py-6 rounded-3xl text-2xl font-bold flex items-center gap-3 mx-auto"><i class="fas fa-volume-up"></i> Speak it hot!</button></div>`;
+      }
+    }
+
+    function answer(selected) {
+      const q = lessons[currentLesson].questions[currentQuestion];
+      const correct = selected === q.answer;
+      const fb = document.getElementById('feedback-area');
+
+      if (correct) {
+        xp += (currentLesson === 3 ? 20 : 10); // double XP on sexy lessons
+        fb.innerHTML = currentLesson === 3 
+          ? `✅ ¡Muy caliente! +20 XP 💋` 
+          : `✅ Correct! +10 XP 🎉`;
+        fb.classList.remove('hidden');
+        setTimeout(() => { fb.classList.add('hidden'); nextQuestion(); }, 1400);
+      } else {
+        hearts--;
+        document.getElementById('lesson-hearts').textContent = hearts;
+        fb.innerHTML = `❌ The answer was <span class="text-red-500">${q.answer}</span>`;
+        fb.classList.remove('hidden');
+        setTimeout(() => { 
+          fb.classList.add('hidden'); 
+          if (hearts > 0) nextQuestion(); 
+          else endLesson(); 
+        }, 1800);
+      }
+    }
+
+    function speak(text) {
+      const u = new SpeechSynthesisUtterance(text); 
+      u.lang = 'es-ES'; 
+      speechSynthesis.speak(u);
+      setTimeout(nextQuestion, 2200);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < lessons[currentLesson].questions.length) loadQuestion();
+      else endLesson();
+    }
+
+    function endLesson() {
+      const bonus = currentLesson === 3 ? 80 : 30;
+      xp += bonus;
+      document.getElementById('xp-total').textContent = xp;
+      document.getElementById('profile-xp').textContent = xp;
+      const msg = currentLesson === 3 
+        ? `🔥 After Dark Lesson Complete!\n\n+${bonus} XP\nYou’re on fire tonight 💋🔥` 
+        : `🎉 Lesson Complete!\n\n+${bonus} XP\nStreak: ${++streak} 🔥`;
+      alert(msg);
+      document.getElementById('streak-count').textContent = streak;
+      document.getElementById('profile-streak').textContent = streak;
+      exitLesson();
+      if (currentLesson === 3) throwConfetti(); // extra confetti for sexy lessons
+    }
+
+    function throwConfetti() {
+      for (let i = 0; i < 120; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = ['#ff006e','#8a2be2','#58CC02'][Math.floor(Math.random()*3)];
+        c.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 6000);
+      }
+    }
+
+    function buyItem(item) {
+      if (item === 0 && gems >= 150) { gems -= 150; hearts += 3; alert('❤️ +3 Hearts!'); }
+      else if (item === 1 && gems >= 300) { gems -= 300; alert('🔥 Streak saved!'); }
+      else if (item === 2 && gems >= 420) { 
+        gems -= 420; 
+        alert('💋 Sexy bonus lesson unlocked! (go to Lessons screen)'); 
+      }
+      document.getElementById('gems-count').textContent = gems;
+      document.getElementById('hearts-count').textContent = hearts;
+    }
+
+    function exitLesson() {
+      document.getElementById('lesson-screen').classList.add('hidden');
+      showScreen('home');
+    }
+
+    // INIT
+    window.onload = () => {
+      showScreen('home');
+      console.log('%c🔥 Lingo After Dark ready for Obose! Sexy jutsu ,mmmmmmmmmmmm i know you like it lessons loaded 💋', 'color:#ff006e;font-size:22px;font-weight:bold');
+    };
+  </script>
+</body>
+</html>
